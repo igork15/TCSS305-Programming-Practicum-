@@ -1,0 +1,59 @@
+src/model/AbstractVehicle.java:36:	Private field 'myBeginX' could be made final; it is only initialized in the declaration or constructor.
+src/model/AbstractVehicle.java:41:	Private field 'myBeginY' could be made final; it is only initialized in the declaration or constructor.
+src/model/AbstractVehicle.java:101:	These nested if statements could be combined
+src/model/AbstractVehicle.java:118:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Atv.java:22:	This final field could be made static
+src/model/Bicycle.java:20:	This final field could be made static
+src/model/Bicycle.java:44:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:45:	Avoid unnecessary if..then..else statements when returning booleans
+src/model/Bicycle.java:47:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:62:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:64:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:66:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:70:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:72:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Bicycle.java:74:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:20:	This final field could be made static
+src/model/Car.java:43:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:45:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:47:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:49:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:50:	Avoid unnecessary if..then..else statements when returning booleans
+src/model/Car.java:52:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:66:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Car.java:68:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:22:	This final field could be made static
+src/model/Human.java:46:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:47:	Avoid unnecessary if..then..else statements when returning booleans
+src/model/Human.java:49:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:65:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:67:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:69:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:70:	Avoid if (x != y) ..; else ..;
+src/model/Human.java:73:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:121:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Human.java:123:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Taxi.java:23:	This final field could be made static
+src/model/Taxi.java:28:	This final field could be made static
+src/model/Taxi.java:47:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Taxi.java:50:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Taxi.java:54:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Taxi.java:58:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Taxi.java:61:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:22:	This final field could be made static
+src/model/Truck.java:46:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:48:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:50:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:51:	Avoid unnecessary if..then..else statements when returning booleans
+src/model/Truck.java:52:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:67:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:69:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:72:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:74:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:76:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:97:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:99:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:118:	A method should have only one exit point, and that should be the last statement in the method
+src/model/Truck.java:120:	A method should have only one exit point, and that should be the last statement in the method
+src/view/EasyStreetGUI.java:5:	A high number of imports can indicate a high degree of coupling within an object.
+src/view/EasyStreetGUI.java:465:	Use equals() to compare object references.
