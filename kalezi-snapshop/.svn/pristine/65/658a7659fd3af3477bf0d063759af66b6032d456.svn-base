@@ -1,0 +1,110 @@
+/* 
+ * TCSS 305 – Autumn 2016
+ * Assignment 4 - SnapShot
+ */
+
+
+
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import filters.EdgeDetectFilter;
+import filters.Filter;
+/** This class creates the GUI for SnapShop.
+ * 
+ * @author Igor Kalezic
+ * @version 4 November 2016 
+ */
+public class SnapShopGUI extends JFrame implements ActionListener {
+    
+    private String[] buttonNames = new String[7];
+    private JButton[] buttons = new JButton[7];
+    
+    
+    public SnapShopGUI() {
+        super();
+    }
+    /**
+     * 
+     */
+    public void start() {
+        
+        
+        setLayout(new BorderLayout());
+        setSize(500, 500);
+        
+        setTitle("TCSS 305 SnapShop");
+        setLocationRelativeTo(null);
+        
+        
+        final JPanel southPanel = new JPanel();
+        final JPanel westPanel = new JPanel();
+        
+        
+        westPanel.setLayout(new GridLayout(0, 1));
+        
+        add(westPanel, BorderLayout.WEST);
+        add(southPanel, BorderLayout.SOUTH);
+        
+        createButtons(westPanel, southPanel);
+        
+        southPanel.add(new JButton("Open..."));        
+        southPanel.add(new JButton("Save As..."));
+        southPanel.add(new JButton("Close Image"));
+
+        
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        pack();
+        setVisible(true);
+        
+        //javax.swing.JOptionPane.showMessageDialog(null, "SnapShop placeholder");
+    }
+    
+    private void createButtons(JPanel theWestPanel, JPanel theSouthPanel) {
+        buttonNames[0] = "Edge Detect";
+        buttonNames[1] = "Edge Highlight";
+        buttonNames[2] = "Flip Horizontal";
+        buttonNames[3] = "Flip Vertical";
+        buttonNames[4] = "Grayscale";
+        buttonNames[5] = "Sharpen";
+        buttonNames[6] = "Soften";
+        
+        for (String b : buttonNames) {
+            int i = 0;
+            JButton button = new JButton(b);
+            theWestPanel.add(button);
+            
+            buttons[i] = button;
+            
+            i++;
+        }
+    }
+    
+    public void listener(ActionListener l) {
+        for (JButton b: buttons) {
+            b.addActionListener(l);
+            
+        }
+    }
+    
+//    public void actionPerformed(ActionEvent e) {
+//        for (JButton b : buttons) {
+//            if (e) {
+//                
+//            }
+//        }
+//    }
+        
+}

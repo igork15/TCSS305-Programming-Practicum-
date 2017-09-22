@@ -1,0 +1,8 @@
+src/gui/SnapShopGUI.java:78:	Private field 'myOpen' could be made final; it is only initialized in the declaration or constructor.
+src/gui/SnapShopGUI.java:83:	Private field 'mySave' could be made final; it is only initialized in the declaration or constructor.
+src/gui/SnapShopGUI.java:88:	Private field 'myClose' could be made final; it is only initialized in the declaration or constructor.
+src/gui/SnapShopGUI.java:93:	Private field 'myChooseFile' could be made final; it is only initialized in the declaration or constructor.
+src/gui/SnapShopGUI.java:98:	Private field 'myLabel' could be made final; it is only initialized in the declaration or constructor.
+src/gui/SnapShopGUI.java:108:	Avoid unnecessary constructors - the compiler will generate these for you
+src/gui/SnapShopGUI.java:172:	Local variable 'f' could be declared final
+src/gui/SnapShopGUI.java:282:	Local variable 'b' could be declared final
