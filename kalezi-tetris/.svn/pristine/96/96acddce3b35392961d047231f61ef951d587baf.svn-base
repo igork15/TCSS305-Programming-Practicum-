@@ -1,0 +1,269 @@
+/* 
+ * TCSS 305 – Autumn 2016
+ * Assignment 6a – Tetris-a
+ */
+
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import keylisteners.KeyListeners;
+import model.Board;
+import model.TetrisPiece;
+
+/** This class is used to create the GUI for the game.
+ * 
+ * @author Igor Kalezic
+ * @version 2 December 2016
+ */
+public class TetrisGUI extends JFrame {
+    
+    /**
+     * Serialization.
+     */
+    private static final long serialVersionUID = 4207812010507283766L;
+
+    /**
+     * Static next panel size field.
+     */
+    private static final int NEXT_PAN_SIZE = 160;
+    
+    /**
+     * Static panel width field.
+     */
+    private static final int PAN_WIDTH = 400;
+    
+    /**
+     * Static panel height field.
+     */
+    private static final int PAN_HEIGHT = 400;
+    
+    /**
+     * Static frame size field.
+     */
+    private static final int FRAME_SIZE = 860;
+    
+    /**
+     * Static width field.
+     */
+    private static final int WIDTH = 10;
+    
+    /**
+     * Static height field.
+     */
+    private static final int HEIGHT = 20;
+    
+    /**
+     * Board field.
+     */
+    private final Board myBoard;
+    
+    /**
+     * The score.
+     */
+    private int myScore;
+    
+    /**
+     * Board panel field.
+     */
+    private BoardPanel myGameBoard;
+    
+    final InformationPanel myInfo;
+    
+    
+    
+    private boolean myGameStatus;
+    
+    /**
+     * Constructor.
+     */
+    public TetrisGUI() {
+        super();
+        myBoard = new Board(WIDTH, HEIGHT);
+        myGameBoard = new BoardPanel(myBoard);
+        myGameStatus = false;
+        myInfo = new InformationPanel(myBoard);
+        final ArrayList<TetrisPiece> sequence = new ArrayList<TetrisPiece>();
+        
+        sequence.add(TetrisPiece.I);
+        sequence.add(TetrisPiece.J);
+        sequence.add(TetrisPiece.L);
+        sequence.add(TetrisPiece.O);
+        sequence.add(TetrisPiece.S);
+        sequence.add(TetrisPiece.T);
+        sequence.add(TetrisPiece.Z);
+        
+        myBoard.setPieceSequence(sequence);
+       
+    }
+    
+    /**
+     * Start the GUI.
+     */
+    public void start() {
+               
+        
+        setTitle("Igor Kalezic - Tetris");
+        
+        setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        final KeyListeners control = new KeyListeners(myBoard, myGameBoard);
+       
+        addKeyListener(control);
+        
+        
+        
+        
+        
+        add(myGameBoard, BorderLayout.WEST);
+        
+        final JPanel pan = new JPanel();
+        pan.setBackground(Color.black);
+        pan.setVisible(true);
+        pan.setPreferredSize(new Dimension(PAN_WIDTH, PAN_HEIGHT));
+        
+        
+
+        
+        
+        add(pan);
+        final NextPiecePanel next = new NextPiecePanel(myBoard);
+       
+        next.setBackground(Color.GRAY);
+        next.setPreferredSize(new Dimension(NEXT_PAN_SIZE, NEXT_PAN_SIZE));
+        pan.add(next);
+        pan.add(myInfo);
+        setJMenuBar(createMenuBar());
+        
+        setResizable(false);
+        pack();
+        setVisible(true);
+        
+       
+    }
+    
+    /**
+     * Creates the menu bar.
+     * @return JMenuBar.
+     */
+    public JMenuBar createMenuBar() {
+        final JMenuBar bar = new JMenuBar();
+        final JMenu help = new JMenu("Help");
+        final JMenuItem endGame = new JMenuItem("End game");
+        final JMenuItem newGame = new JMenuItem("New game");
+        final JMenuItem controls = new JMenuItem("Controls");
+        final HelpListener controlAction = new HelpListener();
+        final EndGameListener endGameAction = new EndGameListener();
+        final NewGameListener newGameAction = new NewGameListener();
+        
+        controls.addActionListener(controlAction);
+        newGame.addActionListener(newGameAction);
+        endGame.addActionListener(endGameAction);
+        
+        help.add(controls);
+        help.add(newGame);
+        help.add(endGame);
+        bar.add(help);
+        bar.setVisible(true);
+        
+        
+        return bar;       
+    }
+    
+    
+    /** This class is the action for the new game button.
+     * 
+     * 
+     * @author Igor Kalezic
+     * @version 2 December 2016 
+     */
+    public class NewGameListener extends AbstractAction {
+              
+
+        /**
+         * Default constructor.
+         */
+        public NewGameListener() {
+            super();
+            
+        }
+        
+        /**
+         * What occurs when button is pressed.
+         * @param theEvent the event that occurs.
+         */
+        public void actionPerformed(final ActionEvent theEvent) {
+            if (!myGameStatus) {
+                myGameStatus = true;
+                myGameBoard.startGame(); 
+                myInfo.resetScore();
+                repaint();
+            }
+                      
+        }
+
+    }
+    
+    /** This class is the action for the end game button.
+     * 
+     * 
+     * @author Igor Kalezic
+     * @version 2 December 2016 
+     */
+    public class EndGameListener extends AbstractAction {
+              
+
+        /**
+         * Default constructor.
+         */
+        public EndGameListener() {
+            super();
+            
+        }
+        
+        /**
+         * What occurs when button is pressed.
+         * @param theEvent the event that occurs.
+         */
+        public void actionPerformed(final ActionEvent theEvent) {
+            if (myGameStatus) {
+                myGameStatus = false;
+                myGameBoard.endGame();
+                
+            }
+                      
+        }
+
+    }
+    
+    
+    /**
+     * Main Method.
+     * 
+     * @param theArgs ignored.
+     */
+    public static void main(final String[] theArgs) {
+        final TetrisGUI gui = new TetrisGUI();
+        gui.start();
+    }
+
+}

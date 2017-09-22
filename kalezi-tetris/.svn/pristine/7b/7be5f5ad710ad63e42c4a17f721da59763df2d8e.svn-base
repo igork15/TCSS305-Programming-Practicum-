@@ -1,0 +1,98 @@
+/* 
+ * TCSS 305 – Autumn 2016
+ * Assignment 6a – Tetris-a
+ */
+
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+
+import model.Board;
+
+/** This class is used to create the GUI for the game.
+ * 
+ * @author Igor Kalezic
+ * @version 2 December 2016
+ */
+public class TetrisGUI extends JFrame {
+    private final Board myBoard;
+    /**
+     * Constructor.
+     */
+    public TetrisGUI() {
+        super();
+        myBoard = new Board(500, 600);
+    }
+    
+    /**
+     * Start the GUI.
+     */
+    public void start() {
+        
+        final BoardPanel gameBoard = new BoardPanel(myBoard);
+        
+        setTitle("Igor Kalezic - Tetris");
+        
+        setPreferredSize(new Dimension(900, 800));
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        add(gameBoard, BorderLayout.WEST);
+        
+        final JPanel pan = new JPanel();
+        pan.setBackground(Color.black);
+        pan.setVisible(true);
+        pan.setPreferredSize(new Dimension(500, 600));
+        add(pan);
+        NextPiecePanel next = new NextPiecePanel(myBoard);
+       
+        next.setBackground(Color.GRAY);
+        next.setPreferredSize(new Dimension(300, 200));
+        pan.add(next);
+        setJMenuBar(createToolBar());
+        
+        
+        pack();
+        setVisible(true);
+        
+       
+    }
+    
+    public JMenuBar createToolBar() {
+        final JMenuBar bar = new JMenuBar();
+        final JMenu help = new JMenu("Help");
+        final JMenuItem controls = new JMenuItem("Controls");
+        final HelpListener controlAction = new HelpListener();
+        
+        controls.addActionListener(controlAction);
+        
+        help.add(controls);
+        bar.add(help);
+        bar.setVisible(true);
+        
+        return bar;
+        
+    }
+    
+
+    
+
+    public static void main(String[] theArgs) {
+        TetrisGUI gui = new TetrisGUI();
+        gui.start();
+        
+    }
+
+}

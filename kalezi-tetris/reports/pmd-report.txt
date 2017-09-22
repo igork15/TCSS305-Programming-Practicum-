@@ -1,0 +1,7 @@
+src/view/AlgorithmListener.java:26:	Avoid unnecessary constructors - the compiler will generate these for you
+src/view/BoardPanel.java:96:	Private field 'myTimer' could be made final; it is only initialized in the declaration or constructor.
+src/view/NextPiecePanel.java:57:	Perhaps 'myPanelSize' could be replaced by a local variable.
+src/view/TetrisGUI.java:78:	Private field 'myGameBoard' could be made final; it is only initialized in the declaration or constructor.
+src/view/TetrisGUI.java:112:	Avoid using implementation types like 'ArrayList'; use the interface instead
+src/view/TetrisGUI.java:256:	Avoid unnecessary constructors - the compiler will generate these for you
+src/view/TetrisGUI.java:295:	Avoid unnecessary constructors - the compiler will generate these for you

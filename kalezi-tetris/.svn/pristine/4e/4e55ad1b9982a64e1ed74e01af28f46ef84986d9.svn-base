@@ -1,0 +1,210 @@
+/* 
+ * TCSS 305 – Autumn 2016
+ * Assignment 6a – Tetris-a
+ */
+
+package view;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import model.Board;
+
+/** This class is used to create the panel for the game.
+ * 
+ * @author Igor Kalezic
+ * @version 2 December 2016
+ */
+public class BoardPanel extends JPanel implements Observer {
+    
+    /**
+     * Serialization.
+     */
+    private static final long serialVersionUID = 1305482449342015453L;
+    
+    /**
+     * Font size.
+     */
+    private static final int FONT_SIZE = 50;
+    
+    /**
+     * Static field that holds the width.
+     */
+    private static final int WIDTH = 400;
+    
+    /**
+     * Static field that holds the height.
+     */
+    private static final int HEIGHT = 800;
+    
+    /**
+     * Initial timer delay.
+     */
+    private static final int BEGINNING_DELAY = 1000;
+    
+    /**
+     * Static field that holds the block size.
+     */  
+    private static final int BLOCK_SIZE = 40;
+    
+    /**
+     * Board field.
+     */
+    protected Board myBoard;
+    
+    /**
+     * Pause status.
+     */
+    private boolean myPaused;
+    
+    /**
+     * Game is over status.
+     */
+    private boolean myGameOver;
+
+    
+    /**
+     * Timer field.
+     */
+    private Timer myTimer;
+    
+    
+    /**
+     * Constructor.
+     * @param theBoard playing board.
+     */
+    public BoardPanel(final Board theBoard) {
+        super();
+        
+        myGameOver = false;
+        myPaused = false;
+        myBoard = theBoard;
+        
+        myBoard.addObserver(this);
+        
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(Color.WHITE);
+        
+        myTimer = new Timer(BEGINNING_DELAY, new TimerListener());
+        myTimer.start();
+        
+    }
+    
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);       
+        
+        drawBoard(g2d);
+        if (myGameOver) {
+            drawGameOverMessage(g2d);
+        }
+        
+    }
+
+
+    @Override
+    public void update(final Observable theObservable, final Object theObj) {
+        if (theObj instanceof Boolean || myGameOver) {
+            myGameOver = true;
+            
+        }
+
+        
+        repaint();
+    }
+    
+    /**
+     * Shows game over message.
+     * @param theG2d graphics.
+     */
+    public void drawGameOverMessage(final Graphics2D theG2d) {
+        if (this.myGameOver) {
+            theG2d.setColor(Color.orange);
+            theG2d.setFont(new Font("TimesRoman", Font.PLAIN, FONT_SIZE));
+            theG2d.drawString("Game Over", this.getWidth() / 4, this.getHeight() /  2);
+        }
+    }
+
+    /**
+     * Draws the pieces of the board.
+     * @param theG2d Graphics.
+     */
+    public void drawBoard(final Graphics2D theG2d) {
+        final String boardString = myBoard.toString();
+        
+        final String[] lines = boardString.split("\n");
+        for (int i = 5; i < lines.length; i++) {
+            final String line = lines[i];
+
+            
+            for (int j = 1; j < line.length(); j++) {
+                if (line.charAt(j) != ' ') {
+                    theG2d.setColor(Color.BLUE);
+                    theG2d.fill3DRect((j - 1) * BLOCK_SIZE, (i - 5) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, true);
+                } 
+               
+            }
+        }
+        
+    }
+    
+    /**
+     * Starts a new game.
+     */
+    public void startGame() {
+        myGameOver = false;
+        myTimer.start();
+        myBoard.newGame();
+    }
+    
+    /**
+     * Ends the game.
+     */
+    public void endGame() {
+        myTimer.stop();
+        myGameOver = true;
+        repaint();
+    }
+    
+    /**
+     * Pauses the game.
+     */
+    public void pauseGame() {
+        myPaused = true;
+        myTimer.stop();
+        JOptionPane.showMessageDialog(null, "Game is paused.\n"
+                                             +"Press OK to unpause");
+        myTimer.start();
+        
+    }
+     
+    /**
+     * Inner timer listener class.
+     * 
+     * @author Igor Kalezic
+     *
+     */
+    private class TimerListener implements ActionListener {
+        
+        @Override
+        public void actionPerformed(final ActionEvent theEvent) {
+            
+            myBoard.down();
+           
+        }
+    }
+}

@@ -1,0 +1,129 @@
+/* 
+ * TCSS 305 – Autumn 2016
+ * Assignment 6a – Tetris-a
+ */
+
+package view;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JPanel;
+
+import model.Board;
+import model.MovableTetrisPiece;
+import model.TetrisPiece;
+
+/** This class is used to create the next piece panel for the game.
+ * 
+ * @author Igor Kalezic
+ * @version 2 December 2016
+ */
+public class NextPiecePanel extends JPanel implements Observer {
+    
+    /**
+     * Serialization.
+     */
+    private static final long serialVersionUID = 497997051656972480L;
+
+    /**
+     * Static block size field.
+     */
+    private static final int BLOCK_SIZE = 40;
+    
+    /**
+     * Static panel size field.
+     */
+    private static final int PANEL_SIZE = 160;
+    
+    /**
+     * Board field.
+     */
+    protected Board myBoard;
+    
+    /**
+     * Movable Tetris Piece field.
+     */
+    private MovableTetrisPiece myMovPiece;
+    
+    /**
+     * Panel size field.
+     */
+    private final int myPanelSize;
+    
+    /**
+     * Constructor.
+     * @param theBoard playing board.
+     */
+    public NextPiecePanel(final Board theBoard) {
+        super();
+        
+        
+        myPanelSize = PANEL_SIZE;
+        
+        setPreferredSize(new Dimension(myPanelSize, myPanelSize));
+        
+        setBackground(Color.WHITE);
+        
+        myBoard = theBoard;
+        myBoard.addObserver(this);
+        
+    }
+    
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        drawNextPiece(g2d);
+    }
+    
+    /**
+     * Draws the preview.
+     * @param theG2d Graphics.
+     */
+    private void drawNextPiece(final Graphics2D theG2d) {
+        
+        if (myMovPiece != null) {
+            final String nextPieceString = myMovPiece.toString();
+            
+            final String[] lines = nextPieceString.split("\n");
+            for (int i = 0; i < lines.length; i++) {
+                final String line = lines[i];
+
+                for (int j = 0; j < line.length(); j++) {
+                    if (line.charAt(j) != ' ') {
+                        theG2d.setColor(Color.GREEN);
+                        theG2d.fill3DRect(j * BLOCK_SIZE, i * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, true);
+                    }
+                }
+            }
+            
+            
+        }
+        
+        
+    
+        
+    }
+    
+    /**
+     * Updates the drawing panel.
+     * 
+     * @param theObject the board.
+     * @param theArg the piece.
+     */
+    public void update(final Observable theObject, final Object theArg) {
+        if (theArg instanceof MovableTetrisPiece) {
+            myMovPiece = (MovableTetrisPiece) theArg;
+            repaint();
+        }
+        
+    }
+
+}

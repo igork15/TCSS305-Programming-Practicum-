@@ -1,0 +1,93 @@
+package view;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JPanel;
+
+import model.Board;
+import model.MovableTetrisPiece;
+
+public class InformationPanel extends JPanel implements Observer {
+    
+    /**
+     * Static panel size field.
+     */
+    private static final int PANEL_SIZE = 160;
+    
+    private static final int FONT_SIZE = 25;
+    
+    private int myScore;
+    
+    private int myLevel;
+    
+    private int myClearLines;
+    
+    protected Board myBoard;
+    
+    
+    public InformationPanel(Board theBoard) {
+        super();
+        setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
+        setBackground(Color.gray);
+        myBoard = theBoard;
+        myBoard.addObserver(this);
+        setVisible(true);
+        
+        myLevel = 1;
+        myScore = 0;
+        myClearLines = 5;
+        
+    }
+    
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        drawScore(g2d);
+        drawLevel(g2d);
+        drawNewLevel(g2d);
+    }
+    
+    public void drawScore(Graphics2D theGraphics) {
+        theGraphics.setFont(new Font("TimesRoman", Font.PLAIN, FONT_SIZE));
+        theGraphics.drawString("Score: " + myScore, PANEL_SIZE/4, PANEL_SIZE/2);
+    }
+    
+    public void drawLevel(Graphics2D theGraphics) {
+        theGraphics.setFont(new Font("TimesRoman", Font.PLAIN, FONT_SIZE));
+        theGraphics.drawString("Level: " + myLevel, PANEL_SIZE/4, PANEL_SIZE/4);
+    }
+    public void drawNewLevel(Graphics2D theGraphics) {
+        theGraphics.setFont(new Font("TimesRoman", Font.PLAIN, 14));
+        theGraphics.drawString("Level up in " + myClearLines + " lines cleared", 2, 100);
+    }
+    
+    public void resetScore() {
+        myScore = 0;
+    }
+    
+    @Override
+    public void update(final Observable theObject, final Object theArg) {
+        if (theArg instanceof MovableTetrisPiece) {
+            myScore++;
+            
+        } else if (theArg instanceof Boolean) {
+            myScore = 0;
+        } else if (theArg instanceof Integer[]) {
+            
+            myScore += 200;
+            myClearLines--;
+        }
+        repaint();
+    }
+
+}
